@@ -1,0 +1,82 @@
+﻿@page "/introduction"
+@inject IJSRuntime? JS
+
+<div class="container">
+    <div class="card" style="background:linear-gradient(135deg,#00b4ff33,#000); border:none;">
+        <div style="padding:40px 20px; text-align:center;">
+            <h1 style="font-size:36px; color:#00b4ff; text-transform:capitalize;">FastTube</h1>
+            <p style="color:#ccc; font-size:16px; margin-top:8px;">A next-gen Video Sharing Platform built for creators, students, and educators — powered by .NET 9 and Azure.</p>
+        </div>
+    </div>
+
+    <div style="margin-top:24px;" class="card">
+        <h2 style="color:#00b4ff;">Project Overview</h2>
+        <p style="color:#c7c7c7; line-height:1.6; margin-top:8px;">
+            FastTube is a cloud-first, scalable video sharing system that aims to provide a smooth, secure, and intelligent platform for publishing, watching, and interacting with multimedia content.
+            Our core idea is to integrate <strong>Azure cloud services</strong> for storage, encoding, streaming, and analytics, while keeping the frontend simple, reactive, and user-friendly using Blazor WebAssembly.
+        </p>
+        <div class="grid" style="margin-top:16px;">
+            <div class="card" style="text-align:center;">
+                <h3>Blazor Web UI</h3>
+                <p class="small">Component-based responsive interface with dynamic video browsing and seamless navigation.</p>
+            </div>
+            <div class="card" style="text-align:center;">
+                <h3>Cloud-Native</h3>
+                <p class="small">Backend powered by Azure Blob, Media Services, and App Service for zero-downtime hosting.</p>
+            </div>
+            <div class="card" style="text-align:center;">
+                <h3>Smart Streaming</h3>
+                <p class="small">Adaptive bitrate streaming ensures optimal playback on any device and connection speed.</p>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top:24px;" class="card">
+        <h2 style="color:#00b4ff;">Vision & Roadmap</h2>
+        <ol style="color:#c7c7c7;">
+            <li>Phase 1 – Frontend design and cloud deployment (current)</li>
+            <li>Phase 2 – Authentication, upload & storage integration</li>
+            <li>Phase 3 – Video processing with Azure Media Services</li>
+            <li>Phase 4 – Comments, analytics, and final testing</li>
+        </ol>
+        <div style="margin-top:10px;" class="small">This roadmap keeps our deliverables modular and aligns with agile sprint planning.</div>
+    </div>
+
+    <div style="margin-top:24px;" class="card">
+        <h2 style="color:#00b4ff;">About the creator</h2>
+        <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:center;">
+            <img src="https://picsum.photos/seed/ashir/160" alt="Profile" style="width:160px; height:160px; border-radius:50%; object-fit:cover;" />
+            <div style="flex:1;">
+                <h3>Muhammad Ashir</h3>
+                <p class="small">Roll No: <strong>22K-4504</strong> | Group: <strong>D</strong></p>
+                <p class="small">
+                    A final-year BSCS student passionate about cloud-driven development, system design, and modern web technologies.
+                    This assignment demonstrates my capability to design a real-world production-ready web UI using Microsoft’s Blazor framework and deploy it seamlessly on Azure using CI/CD pipelines.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top:24px;" class="card">
+        <h2 style="color:#00b4ff;">Other Team Members collaborating for the project:</h2>
+        <div style="display:flex; gap:20px; flex-wrap:wrap; align-items:center;">
+            <div style="flex:1;">
+                <ol style="color:#c7c7c7;">
+                    <li>Muhammad Ashir (Me)</li>
+                    <li>Syed Ghazali Imam</li>
+                    <li>Abdullah Elahi</li>
+                    <li>Shahzaib</li>
+                    <li>Shozab</li>
+                    <li>Hassan</li>
+                    <li>Ahmed</li>
+                    <li>Timmy</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="site-footer">
+        © 2025 FastTube — Built by Muhammad Ashir (22K-4504)
+    </footer>
+</div>

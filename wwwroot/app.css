@@ -1,0 +1,234 @@
+/* wwwroot/app.css - paste/overwrite existing */
+:root {
+    --bg: #0f0f0f;
+    --card: #151515;
+    --muted: #bdbdbd;
+    --accent: #00b4ff;
+    --accent-2: #7de3ff;
+    --glass: rgba(255,255,255,0.03);
+}
+
+body {
+    background: var(--bg);
+    color: #e8eef2;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+.header {
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+}
+
+h3{
+    color: dimgray;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+    .brand .logo {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        background: linear-gradient(135deg,var(--accent),var(--accent-2));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: #00151a;
+    }
+
+.site-title {
+    font-size: 18px;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+.top-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-input {
+    background: var(--glass);
+    border: 1px solid rgba(255,255,255,0.04);
+    padding: 8px 12px;
+    border-radius: 8px;
+    width: 320px;
+    color: var(--muted);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 22px auto;
+    padding: 0 18px;
+}
+
+.hero {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 18px;
+}
+
+.hero-left {
+    flex: 1;
+}
+
+.hero-right {
+    width: 320px;
+    min-width: 260px;
+}
+
+/* cards */
+.card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.02);
+}
+
+.small {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* video grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+/* Video card */
+.video-thumb {
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+    background: #0a0a0a;
+}
+
+.video-card {
+    transition: transform .18s ease, box-shadow .18s;
+    cursor: default;
+}
+
+    .video-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+    }
+
+.video-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.badge {
+    background: rgba(255,255,255,0.03);
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* buttons */
+.btn {
+    background: linear-gradient(90deg,var(--accent),var(--accent-2));
+    padding: 8px 12px;
+    border: none;
+    color: #00151a;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+    .btn.secondary {
+        background: transparent;
+        color: var(--accent);
+        border: 1px solid rgba(255,255,255,0.04);
+    }
+
+.controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 12px;
+}
+
+/* modal */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 60;
+}
+
+.modal {
+    width: 90%;
+    max-width: 900px;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+/* layout snippets */
+.kv {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+    .kv .pill {
+        background: rgba(255,255,255,0.03);
+        padding: 6px 10px;
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 13px;
+    }
+
+/* footer */
+footer.site-footer {
+    margin-top: 36px;
+    padding: 18px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* responsive */
+@media (max-width:720px) {
+    .hero {
+        flex-direction: column;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+
+    .hero-right {
+        width: 100%;
+    }
+
+    .video-thumb {
+        height: 130px;
+    }
+}

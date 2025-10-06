@@ -1,0 +1,32 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid" style="margin-left: -1rem;">
+        <a class="navbar-brand" href="introduction" style="margin-left: auto; margin-right: auto;">FastTube</a>
+        <p style="color: gray; margin-left: auto; margin-right: auto;">Video Sharing Platform</p>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="nav flex-column">
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="introduction">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Introduction
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="architecture">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Architecture
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="azureservices">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Azure Services
+            </NavLink>
+        </div>
+    </nav>
+</div>
+

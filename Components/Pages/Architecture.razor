@@ -1,0 +1,94 @@
+﻿@page "/architecture"
+@using video_sharing_platform_d224504_muhammadashir.Components
+
+<div class="container">
+    <div class="card">
+        <h1>product frontend (interactive demo)</h1>
+        <p class="small">This is my proposed working dummy frontend representing the future UI of our Video Sharing Platform.</p>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:12px;">
+            <input class="search-input" placeholder="search videos, tags, creators..." @bind="searchQuery" />
+            <select @bind="selectedSort" style="padding:8px 10px; border-radius:8px; background:var(--glass); color:var(--muted); border:1px solid rgba(255,255,255,0.03);">
+                <option value="relevance">sort: relevance</option>
+                <option value="new">sort: newest</option>
+                <option value="popular">sort: most popular</option>
+            </select>
+            <div style="margin-left:auto;" class="small">Showing @FilteredVideos.Count() of @AllVideos.Count videos</div>
+        </div>
+
+        <div class="grid" style="margin-top:16px;">
+            @foreach (var v in PagedVideos)
+            {
+                <VideoCard Title="@v.Title" ShortDescription="@v.Description" ThumbnailUrl="@v.Thumb" Duration="@v.Duration" Views="@v.Views" Likes="@v.Likes" Tags="@v.Tags" VideoUrl="@v.VideoUrl" />
+            }
+        </div>
+
+        <div style="display:flex; justify-content:center; margin-top:14px;">
+            @if (HasMore)
+            {
+                <button class="btn" @onclick="LoadMore">Load more</button>
+            }
+            else
+            {
+                <div class="small">No more videos</div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private class VideoItem
+    {
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string Thumb { get; set; } = string.Empty;
+        public string? VideoUrl { get; set; } = null;
+        public string Duration { get; set; } = "0:00";
+        public int Views { get; set; } = 0;
+        public int Likes { get; set; } = 0;
+        public string[] Tags { get; set; } = Array.Empty<string>();
+    }
+
+    private List<VideoItem> AllVideos = new();
+    private int pageSize = 6;
+    private int page = 1;
+    private string searchQuery = string.Empty;
+    private string selectedSort = "relevance";
+
+    protected override void OnInitialized()
+    {
+        for (int i = 1; i <= 18; i++)
+        {
+            AllVideos.Add(new VideoItem
+            {
+                Title = $"FASTtube Demo Video #{i}",
+                Description = "Short demo clip showcasing UI and features.",
+                Thumb = $"https://picsum.photos/seed/vid{i}/640/360",
+                VideoUrl = null,
+                Duration = $"{(i % 10) + 0}:{(i * 7) % 60:00}",
+                Views = 1200 * i,
+                Likes = 30 * i,
+                Tags = new[] { (i % 2 == 0) ? "education" : "entertainment", (i % 3 == 0) ? "demo" : "ui" }
+            });
+        }
+    }
+
+    private IEnumerable<VideoItem> FilteredVideos =>
+        AllVideos.Where(v =>
+            string.IsNullOrWhiteSpace(searchQuery) ||
+            v.Title.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
+            v.Description.Contains(searchQuery, StringComparison.OrdinalIgnoreCase) ||
+            v.Tags.Any(t => t.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)));
+
+    private IEnumerable<VideoItem> SortedVideos =>
+        selectedSort switch
+        {
+            "new" => FilteredVideos.OrderByDescending(v => v.Title),
+            "popular" => FilteredVideos.OrderByDescending(v => v.Views),
+            _ => FilteredVideos
+        };
+
+    private IEnumerable<VideoItem> PagedVideos => SortedVideos.Take(page * pageSize);
+    private bool HasMore => SortedVideos.Count() > page * pageSize;
+    private void LoadMore() => page++;
+}

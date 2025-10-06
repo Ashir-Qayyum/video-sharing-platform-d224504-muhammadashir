@@ -1,0 +1,82 @@
+﻿@inject IJSRuntime? JS
+
+<div class="card video-card">
+    <img class="video-thumb" src="@ThumbnailUrl" alt="@Title" />
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+        <div>
+            <div style="font-weight:700;">@Title</div>
+            <div class="small">@ShortDescription</div>
+        </div>
+        <div style="text-align:right;">
+            <div class="small">@Duration</div>
+            <div class="small">@Views.ToString("N0") views</div>
+        </div>
+    </div>
+    
+    <div class="video-meta">
+        <div class="kv">
+            @if (Tags != null)
+            {
+                @foreach (var t in Tags)
+                {
+                    <div class="pill">@t</div>
+                }
+            }
+        </div>
+        <div style="display:flex; gap:8px; align-items:center;">
+            <button class="btn" @onclick="OpenPlayer">Play</button>
+            <button class="btn secondary" @onclick="ToggleLike">@((Liked) ? "Liked" : "Like") (@Likes)</button>
+        </div>
+    </div>
+
+    @if (showPlayer)
+    {
+        <div class="modal-backdrop" @onclick="ClosePlayer">
+            <div class="modal" @onclick:stopPropagation>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-weight:700;">@Title</div>
+                    <button class="btn secondary" @onclick="ClosePlayer">Close</button>
+                </div>
+
+                <div style="margin-top:12px;">
+                    @if (!string.IsNullOrEmpty(VideoUrl))
+                    {
+                        <video controls style="width:100%; border-radius:8px;" src="@VideoUrl"></video>
+                    }
+                    else
+                    {
+                        <div class="card" style="padding:20px; text-align:center;">
+                            <div style="font-weight:700; margin-bottom:8px;">Demo Player</div>
+                            <img src="@ThumbnailUrl" style="width:100%; height:320px; object-fit:cover; border-radius:8px;" />
+                            <div class="small" style="margin-top:8px;">This is a demo placeholder. Replace VideoUrl later with a real streaming URL.</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = "Untitled video";
+    [Parameter] public string ShortDescription { get; set; } = string.Empty;
+    [Parameter] public string ThumbnailUrl { get; set; } = "https://via.placeholder.com/640x360?text=Video";
+    [Parameter] public string Duration { get; set; } = "0:00";
+    [Parameter] public int Views { get; set; } = 0;
+    [Parameter] public int Likes { get; set; } = 0;
+    [Parameter] public string? VideoUrl { get; set; } = null;
+    [Parameter] public string[]? Tags { get; set; } = Array.Empty<string>();
+
+    private bool showPlayer = false;
+    private bool liked = false;
+    private bool Liked => liked;
+
+    private void OpenPlayer() => showPlayer = true;
+    private void ClosePlayer() => showPlayer = false;
+
+    private void ToggleLike()
+    {
+        liked = !liked;
+        Likes += liked ? 1 : -1;
+    }
+}

@@ -1,0 +1,108 @@
+﻿@page "/azureservices"
+
+<div class="container">
+    <div class="card">
+        <h1 style="color:#00b4ff;">Azure Integration Plan</h1>
+        <p class="small">The following Azure services form the backbone of FastTube. Each component handles a specific layer of our video pipeline — from upload to streaming and analytics.</p>
+
+        <div class="grid" style="margin-top:16px;">
+            @foreach (var s in Services)
+            {
+                <div class="card" style="padding:16px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h3 style="color:#00b4ff;">@s.Title</h3>
+                        <span class="badge">@s.Category</span>
+                    </div>
+                    <p class="small" style="margin-top:8px;">@s.Description</p>
+                    @* <button class="btn secondary" @onclick="() => ToggleDetail(s)">@((activeService == s) ? "Hide details" : "View details")</button> *@
+
+                    @if (activeService == s)
+                    {
+                        <div class="card" style="background:var(--glass); margin-top:12px; padding:12px;">
+                            <p class="small"><strong>Purpose:</strong> @s.Purpose</p>
+                            <p class="small"><strong>Usage Steps:</strong></p>
+                            <ul class="small">
+                                @foreach (var step in s.Steps)
+                                {
+                                    <li>@step</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:24px;">
+        <h2 style="color:#00b4ff;">overall cloud architecture</h2>
+        <div style="text-align:center; margin-top:12px;">
+            <svg width="100%" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+                <defs><marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#00b4ff" /></marker></defs>
+                <rect x="20" y="30" width="160" height="50" rx="10" fill="#111" stroke="#222" />
+                <text x="100" y="60" text-anchor="middle" fill="#bfefff" font-size="13">Blazor Web App</text>
+
+                <rect x="230" y="30" width="160" height="50" rx="10" fill="#111" stroke="#222" />
+                <text x="310" y="60" text-anchor="middle" fill="#bfefff" font-size="13">Azure App Service</text>
+
+                <rect x="440" y="30" width="140" height="50" rx="10" fill="#111" stroke="#222" />
+                <text x="510" y="60" text-anchor="middle" fill="#bfefff" font-size="13">Azure AD B2C</text>
+
+                <rect x="100" y="140" width="140" height="50" rx="10" fill="#111" stroke="#222" />
+                <text x="170" y="170" text-anchor="middle" fill="#bfefff" font-size="13">Azure Blob Storage</text>
+
+                <rect x="300" y="140" width="140" height="50" rx="10" fill="#111" stroke="#222" />
+                <text x="370" y="170" text-anchor="middle" fill="#bfefff" font-size="13">Azure Media Services</text>
+
+                <rect x="220" y="230" width="160" height="50" rx="10" fill="#111" stroke="#222" />
+                <text x="300" y="260" text-anchor="middle" fill="#bfefff" font-size="13">Azure SQL Database</text>
+
+                <line x1="180" y1="80" x2="230" y2="80" stroke="#00b4ff" stroke-width="2" marker-end="url(#arrow)" />
+                <line x1="390" y1="80" x2="440" y2="80" stroke="#00b4ff" stroke-width="2" marker-end="url(#arrow)" />
+                <line x1="170" y1="90" x2="170" y2="140" stroke="#00b4ff" stroke-width="2" marker-end="url(#arrow)" />
+                <line x1="370" y1="90" x2="370" y2="140" stroke="#00b4ff" stroke-width="2" marker-end="url(#arrow)" />
+                <line x1="240" y1="190" x2="300" y2="230" stroke="#00b4ff" stroke-width="2" marker-end="url(#arrow)" />
+                <line x1="440" y1="190" x2="380" y2="230" stroke="#00b4ff" stroke-width="2" marker-end="url(#arrow)" />
+            </svg>
+        </div>
+        <p class="small" style="margin-top:8px;">Data flow: User → Blazor UI → App Service → Blob → Media Services → SQL → CDN delivery.</p>
+    </div>
+
+    <footer class="site-footer">© 2025 FastTube | Azure for Students Deployment | Muhammad Ashir (22K-4504)</footer>
+</div>
+
+
+
+@* @code {
+    private class AzureService
+    {
+        public string Title { get; set; } = string.Empty;
+        public string Category { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string Purpose { get; set; } = string.Empty;
+        public List<string> Steps { get; set; } = new();
+    }
+
+    private List<AzureService> Services = new();
+    private AzureService? activeService;
+
+    protected override void OnInitialized()
+    {
+        Services = new List<AzureService>
+    {
+      new() { Title="Azure App Service", Category="Hosting", Description="Runs our Blazor Web App in a managed environment.", Purpose="Provides deployment, scaling, and monitoring.", Steps=new(){"Deploy via GitHub CI/CD","Configure environment variables"} },
+      new() { Title="Azure Blob Storage", Category="Storage", Description="Stores raw and processed video files.", Purpose="Provide cheap, durable, and secure object storage.", Steps=new(){"Upload using SAS URLs","Enable lifecycle policies"} },
+      new() { Title="Azure Media Services", Category="Streaming", Description="Handles video encoding and adaptive streaming.", Purpose="Convert videos into streaming formats.", Steps=new(){"Transcode after upload","Generate streaming URLs"} },
+      new() { Title="Azure CDN", Category="Delivery", Description="Caches video content globally for faster access.", Purpose="Serve viewers efficiently worldwide.", Steps=new(){"Connect CDN to Media Services","Apply caching rules"} },
+      new() { Title="Azure SQL Database", Category="Database", Description="Stores metadata like video info, users, and comments.", Purpose="Maintain structured relational data.", Steps=new(){"Define tables and relations","Connect securely from backend"} },
+      new() { Title="Azure AD B2C", Category="Authentication", Description="Handles secure user authentication and authorization.", Purpose="Enable login/signup with social providers.", Steps=new(){"Register app in B2C","Integrate MSAL in frontend"} },
+      new() { Title="Azure Functions", Category="Automation", Description="Runs background jobs on upload events.", Purpose="Trigger media encoding or notifications.", Steps=new(){"Create blob-triggered function","Update database when done"} }
+    };
+    }
+
+    private void ToggleDetail(AzureService service)
+    {
+        if (activeService == service) activeService = null;
+        else activeService = service;
+    }
+} *@
