@@ -31,8 +31,10 @@ jobs:
         run: dotnet restore
 
       # Step 3: Build and publish the Blazor app
+      # This step builds the app and outputs it to the 'build_output' directory.
+      # The output_location in the deploy step will then point to 'build_output/wwwroot'.
       - name: Build and publish
-        run: dotnet publish -c Release -o build_output
+        run: dotnet publish -c Release -o build_output --nologo
 
       # Step 4: Deploy to Azure Static Web App
       - name: Deploy to Azure Static Web Apps
@@ -44,6 +46,10 @@ jobs:
           action: "upload"
           app_location: "/"
           output_location: "build_output/wwwroot"
+          # THIS IS THE CRUCIAL CHANGE:
+          # Tells the Static Web Apps action to skip its own build process,
+          # as we've already pre-built the application in the previous steps.
+          skip_app_build: true
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
